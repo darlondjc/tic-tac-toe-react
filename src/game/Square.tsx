@@ -3,10 +3,10 @@ export function Square(props: any) {
 
     return (
         <button
-            className="square"
+            className="normal-square"
             onClick={props.onClick}
         >
-            {props.value}
+            <span className={props.winner ? 'winner' : ''}>{props.value}</span>
         </button>
     );
 }

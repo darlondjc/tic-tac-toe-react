@@ -25,7 +25,7 @@ export function Board() {
     }
 
     function renderSquare(i: any) {
-        return <Square
+        return <Square winner={(winner != null && winner.line?.includes(i))}
             value={state.history[state.history.length - 1].squares[i]}
             onClick={() => handleClick(i)}
         />;
@@ -50,7 +50,7 @@ export function Board() {
         for (const line of lines) {
             const [a, b, c] = line;
             if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-                return squares[a];
+                return { line: line, player: squares[a] };
             }
         }
         return null;
@@ -69,7 +69,7 @@ export function Board() {
     }
 
     const winner = calculateWinner();
-    const status = winner != null ? 'Winner is ' + winner : (state.count < 9 ? ('Next player: ' + (state.xIsNext ? 'X' : 'O')) : 'End of game');
+    const status = winner != null ? 'Winner is ' + winner.player : (state.count < 9 ? ('Next player: ' + (state.xIsNext ? 'X' : 'O')) : 'It\'s a draw!');
     const restart = winner != null ? true : (state.count < 9 ? false : true);
     return (
         <div>
@@ -105,7 +105,7 @@ export function Board() {
             >
                 Restart game
             </button>
-            
+
         </div>
     );
 }
